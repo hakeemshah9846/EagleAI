@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import BarChart from "../../components/Charts/BarChart";
 // Import Breadcrumb
@@ -9,6 +9,7 @@ import SellingProduct from "./SellingProduct";
 import TopUser from "./TopUsers";
 import RecentActivity from "./Activity"
 import SocialSource from "./SocialSource"
+import Loader from "../../components/Loader/Loader";
 
 const rdcData = [
         { x: "Multiple Accepted Ballots", Found: 13, Voted: 3 },
@@ -108,6 +109,12 @@ const uspsCassData = [
 
 const Dashboard = () => {
     document.title = "Dashboard | EagleAI"
+
+    const [loading, setIsLoading] = useState(false);
+
+    if (loading) {
+    return  <div style={{height:"100vh", width:"100vw", display:"grid", placeItems:'center', background:"white"}}> <Loader /> </div>
+  }
     
     return ( 
             <div className="page-content">

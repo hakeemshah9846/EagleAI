@@ -30,8 +30,6 @@ import useLoginSelector from "./hooks/useLoginSelector"
 import Loader from "../../components/Loader/Loader" 
 
 const Login = props => {
-  console.log("Login Component rendered...");
-
   
   const dispatch = useDispatch()
   const navigate = useNavigate() 
@@ -70,9 +68,9 @@ const Login = props => {
   }, [isAuthenticated])
 
   
-  if (loading) {
-    return  <div style={{height:"100vh", width:"100vw", display:"grid", placeItems:'center', background:"white"}}> <Loader /> </div>
-  }
+  // if (loading) {
+  //   return  <div style={{height:"100vh", width:"100vw", display:"grid", placeItems:'center', background:"white"}}> <Loader /> </div>
+  // }
 
   return (
     <div className="account-pages my-5 pt-sm-5"> 

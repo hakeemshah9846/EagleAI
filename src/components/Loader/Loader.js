@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Loader = () => {
-  console.log("Loader component rendering...");
   
   return ( 
     <div id="preloader loading">

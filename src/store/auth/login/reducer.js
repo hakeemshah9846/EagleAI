@@ -37,14 +37,15 @@ const Login = (state = initialState, action) => {
             }
             break
         case LOGOUT_USER: 
+        console.log("Logout user reducer...");
             state = { ...state }
             break
         case LOGOUT_USER_SUCCESS:
             localStorage.clear()
-            state = { ...state,isAuthenticated:false,authDetails:null,error:"",loading:false  }
+            state = { ...state,isAuthenticated:false,authDetails:null,error:""  }
             break
         case API_ERROR:
-            state = { ...state, error: action.payload, loading: false }
+            state = { ...state, error: action.payload }
             break 
         case SET_LOADING_STATUS: 
              state = {...state, loading:action.payload}

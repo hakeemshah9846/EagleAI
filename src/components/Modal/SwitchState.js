@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Modal, Button, } from "reactstrap";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { call, put, takeEvery } from "redux-saga/effects"
 import StateAPI from "../../store/auth/state/api";
-import useToastHelper from "../../hooks/useToastHelper";
 import { getProfile } from "../../store/actions";
+import {setLoadingStatus} from "../../store/auth/login/actions"
 
-const SwitchState = ({ isOpen, setIsOpen, userProfile, handleLoader }) => {
-    console.log("SwitchState")
+
+const SwitchState = ({ isOpen, setIsOpen, userProfile, handleLoader, showSuccessToast, showFailureToast }) => {
     const dispatch = useDispatch();
-    const { showFailureToast, showSuccessToast } = useToastHelper();
     const states = useSelector(
         (state) => state?.Profile?.userDetails?.user_states || [],
         shallowEqual // Compare shallowly to prevent unnecessary rerenders
@@ -16,10 +16,10 @@ const SwitchState = ({ isOpen, setIsOpen, userProfile, handleLoader }) => {
 
     async function changeState(id) {
         try {
+            await handleLoader();
+            await setIsOpen(false);
             await StateAPI.switchState({'state_id': id});
-            console.log("Before showSuccessToast");
-            showSuccessToast('Success.')
-            setIsOpen(false);
+            await showSuccessToast('Success.')
             dispatch(getProfile());
         } catch (error) {
             showFailureToast(error?.response?.data?.message || 'Something went wrong, please try again.');
@@ -62,7 +62,7 @@ const SwitchState = ({ isOpen, setIsOpen, userProfile, handleLoader }) => {
                                 outline={row?.ID === userProfile?.Access_Default_State_Web ? false : true}
                                 disabled={row?.ID === userProfile?.Access_Default_State_Web ? true : false}
                                 className="waves-effect"
-                                key={row?.ID} onClick={async () => {handleLoader(); await changeState(row?.ID); }}
+                                key={row?.ID} onClick={() => {changeState(row?.ID); }}
                             >
                                 { row?.State_Name || row?.State_Abbreviation }
                             </Button>

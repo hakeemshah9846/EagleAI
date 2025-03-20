@@ -11,11 +11,12 @@ import {
 import { withTranslation } from "react-i18next"
 // Redux
 import { connect, useDispatch, useSelector } from "react-redux"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import withRouter from "../../Common/withRouter"
 import { logoutUser } from "../../../store/actions"
 
 import UserImage from "../../../assets/images/users/userimg.jpeg"
+import Loader from "../../Loader/Loader"
 
 const ProfileMenu = props => {
     const dispatch                = useDispatch();
@@ -23,6 +24,8 @@ const ProfileMenu = props => {
     const [username, setusername] = useState("Admin")
     const userProfile = useSelector(state=>state.Profile.userDetails) 
     const location = useLocation()?.pathname
+
+
 
     useEffect(() => {
         if (localStorage.getItem("authUser")) {
@@ -33,15 +36,20 @@ const ProfileMenu = props => {
                 setusername(obj.name)
             }
         }
-    }, [props.success])
+    }, [props.success]);
+
+
+ 
 
     const handleLogout = () => {
         dispatch(logoutUser(props.router.navigate));
     };
 
+
     useEffect(() => {
         setMenu(false)
     }, [location])
+    
 
     return (
         <React.Fragment>

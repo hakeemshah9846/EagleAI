@@ -22,6 +22,7 @@ export const loginSuccess = user => {
 }
 
 export const logoutUser = (history) => {
+    console.log("logout user...")
     return {
         type: LOGOUT_USER,
         payload: { history },

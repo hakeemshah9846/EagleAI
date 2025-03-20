@@ -38,14 +38,20 @@ const useToastHelper = () => {
     let isExisting = toast?.some(item => item.message === message)
     if (isExisting) return
     
-    setToast(prev => [
-      ...prev,
-      {
-        type: SUCCESS,
-        message,
-        title: "Success",
-      },
-    ])
+    // setToast(prev => [
+    //   ...prev,
+    //   {
+    //     type: SUCCESS,
+    //     message,
+    //     title: "Success",
+    //   },
+    // ])
+
+    setToast(prev => {
+      const newToast = [...prev, { type: SUCCESS, message, title: "Success", }];
+      console.log('Updated toast state:', newToast);
+      return newToast;
+    });
   }
 
   const showFailureToast = message => {
